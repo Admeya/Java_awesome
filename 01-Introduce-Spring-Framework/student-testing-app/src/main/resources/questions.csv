@@ -1,0 +1,3 @@
+Question;Answer a;Answer b;Answer c;Right answer
+Which attributes has <constructor-arg>;id;value;name;b,c
+What kind of injection Spring has?;constructor;getter;setter;a,c
