@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="csvHandler" class="ru.otus.spring.services.CsvHandler">
+        <constructor-arg name="resourceQuestionsCsv" value="classpath:questions.csv" />
+        <constructor-arg name="mapper" ref="csvMapper" />
+    </bean>
+
+
+    <bean id="csvMapper" class="ru.otus.spring.mapper.CSVRecordToQuestionMapper"/>
+
+
+
+</beans>
