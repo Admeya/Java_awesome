@@ -28,27 +28,31 @@ public class CsvHandler {
     }
 
     public List<Question> readResource() {
-        List<Question> questions = new ArrayList<>();
+        List<Question> questions = List.of();
         try (InputStreamReader inputStreamReader = new InputStreamReader(resourceQuestionsCsv.getInputStream())) {
-            for (CSVRecord csvRecord : getRecordSettings(inputStreamReader)) {
-                questions.add(mapper.map(csvRecord));
-            }
+            questions = saveRecords(inputStreamReader);
         } catch (IOException e) {
             System.out.println("Something wrong: " + e);
         }
         return questions;
     }
 
-    public void printQuestions(List<Question> questions) {
-        for (Question question : questions) {
+    public void printQuestion(Question question) {
             System.out.println("Question No - " + question.getQuestionNumber());
             System.out.println("---------------");
             System.out.println("Question : " + question.getQuestion());
             System.out.println("answerA : " + question.getAnswerA());
             System.out.println("answerB : " + question.getAnswerB());
             System.out.println("answerC : " + question.getAnswerC());
-            System.out.println("---------------\n\n");
+            System.out.println("---------------");
+    }
+
+    private List<Question> saveRecords(InputStreamReader inputStreamReader) throws IOException {
+        List<Question> questions = new ArrayList<>();
+        for (CSVRecord csvRecord : getRecordSettings(inputStreamReader)) {
+            questions.add(mapper.map(csvRecord));
         }
+        return questions;
     }
 
     private Iterable<CSVRecord> getRecordSettings(InputStreamReader in) throws IOException {

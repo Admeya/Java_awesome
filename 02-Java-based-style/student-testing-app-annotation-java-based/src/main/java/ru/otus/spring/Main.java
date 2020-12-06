@@ -13,6 +13,5 @@ public class Main {
 
         TestingServiceFromCsv testingService = context.getBean(TestingServiceFromCsv.class);
         testingService.launchTesting();
-
     }
 }
