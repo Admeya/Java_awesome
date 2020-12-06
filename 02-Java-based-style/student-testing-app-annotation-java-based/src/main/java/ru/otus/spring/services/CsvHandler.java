@@ -1,9 +1,11 @@
 package ru.otus.spring.services;
 
-import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import ru.otus.spring.mapper.CSVRecordToQuestionMapper;
 import ru.otus.spring.model.Question;
 
@@ -12,11 +14,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+@Component
+@PropertySource("classpath:application.properties")
 public class CsvHandler {
 
-    private final Resource resourceQuestionsCsv;
     private final CSVRecordToQuestionMapper mapper;
+
+    @Value("${resource.csv}")
+    private Resource resourceQuestionsCsv;
+
+    public CsvHandler(CSVRecordToQuestionMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public List<Question> readResource() {
         List<Question> questions = new ArrayList<>();
