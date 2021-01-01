@@ -1,3 +1,6 @@
 Question;Answer a;Answer b;Answer c;Right answer
 Which attributes has <constructor-arg>;id;value;name;b,c
 What kind of injection Spring has?;constructor;getter;setter;a,c
+What scopes has java beans?;singleton;prototype;both;c
+Singleton bean may be declared in ENUM;yes;no;don't know;a
+SDK it is:;Software Development Kit;Single Dependency Kit;Source Driven Kit;a

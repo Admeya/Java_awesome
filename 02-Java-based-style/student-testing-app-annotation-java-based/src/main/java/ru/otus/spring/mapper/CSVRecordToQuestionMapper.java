@@ -1,8 +1,10 @@
 package ru.otus.spring.mapper;
 
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Component;
 import ru.otus.spring.model.Question;
 
+@Component
 public class CSVRecordToQuestionMapper {
 
     public Question map(CSVRecord csvRecord) {
