@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@PropertySource("classpath:application.properties")
 public class CsvHandler {
 
     private final CSVRecordToQuestionMapper mapper;

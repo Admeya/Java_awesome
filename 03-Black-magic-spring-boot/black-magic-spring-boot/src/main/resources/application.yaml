@@ -1,0 +1,2 @@
+resource:
+  csv: classpath:questions.csv
