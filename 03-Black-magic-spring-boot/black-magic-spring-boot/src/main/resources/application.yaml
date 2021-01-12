@@ -1,2 +1,12 @@
+spring:
+  messages:
+    basename: i18n/bundle
+    encoding: UTF-8
+
+application:
+  locale: ru_RU
+
 resource:
-  csv: classpath:questions.csv
+  csv:
+    en: classpath:i18n/questions_en.csv
+    ru: classpath:i18n/questions_ru.csv

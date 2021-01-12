@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.model.Question;
 import ru.otus.spring.services.CsvHandler;
+import ru.otus.spring.services.LocalizationHandler;
 import ru.otus.spring.services.TestingService;
 
 import java.util.List;
@@ -16,11 +17,12 @@ import java.util.Scanner;
 @AllArgsConstructor
 public class TestingServiceFromCsv implements TestingService {
 
-    final CsvHandler csvHandler;
+    private final CsvHandler csvHandler;
+    private final LocalizationHandler localizationHandler;
 
     @Override
     public void launchTesting() {
-        List<Question> questions = csvHandler.readResource();
+        List<Question> questions = csvHandler.readResource(localizationHandler.getLocale());
         int count = examineStudents(questions);
         checkExamine(count);
     }
@@ -32,7 +34,7 @@ public class TestingServiceFromCsv implements TestingService {
 
         for (Question question : questions) {
             csvHandler.printQuestion(question);
-            System.out.println("Your answer:");
+            System.out.println(localizationHandler.getAnswerMessage());
             String answer = scanner.nextLine();
             System.out.println("\n");
             if (isAnswerRight(question.getRightAnswer(), answer)) {
@@ -40,16 +42,16 @@ public class TestingServiceFromCsv implements TestingService {
             }
         }
 
-        System.out.println(fio + ", your result: " + rightAnswers + " correct answers from " + questions.size());
+        System.out.println(localizationHandler.getResultMessage(fio, String.valueOf(rightAnswers),
+                String.valueOf(questions.size())));
         return rightAnswers;
     }
 
     private String introduceAndGetFio(Scanner scanner) {
-        System.out.println("Hi, introduce yourself, please:");
+        System.out.println(localizationHandler.getIntroduceMessage());
         String fio = scanner.nextLine();
-        System.out.println("Thanks, let's start testing");
-        System.out.println("If you choose multiple answer options, please, separate with comma. \n " +
-                "For example a,c\n");
+        System.out.println(localizationHandler.getHelloMessage(fio));
+        System.out.println(localizationHandler.getHintMessage());
         return fio;
     }
 
@@ -61,9 +63,9 @@ public class TestingServiceFromCsv implements TestingService {
         int passed = 3;
         boolean isPassed = countCorrectAnswers >= passed;
         if (isPassed) {
-            System.out.println("Congratulations! You passed the exam");
+            System.out.println(localizationHandler.getSuccessMessage());
         } else {
-            System.out.println("Sorry, try again later");
+            System.out.println(localizationHandler.getFailMessage());
         }
         return isPassed;
     }
