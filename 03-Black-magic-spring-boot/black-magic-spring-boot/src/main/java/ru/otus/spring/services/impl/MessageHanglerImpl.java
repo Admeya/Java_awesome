@@ -1,15 +1,16 @@
-package ru.otus.spring.services;
+package ru.otus.spring.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import ru.otus.spring.configuration.ApplicationProperties;
+import ru.otus.spring.services.MessageHandler;
 
 import java.util.Locale;
 
 @Component
 @AllArgsConstructor
-public class LocalizationHandler {
+public class MessageHanglerImpl implements MessageHandler {
 
     private final MessageSource messageSource;
     private final ApplicationProperties applicationProperties;

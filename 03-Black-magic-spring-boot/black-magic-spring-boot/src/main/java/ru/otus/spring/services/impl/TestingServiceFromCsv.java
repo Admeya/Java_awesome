@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.model.Question;
 import ru.otus.spring.services.CsvHandler;
-import ru.otus.spring.services.LocalizationHandler;
+import ru.otus.spring.services.MessageHandler;
 import ru.otus.spring.services.TestingService;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class TestingServiceFromCsv implements TestingService {
 
     private final CsvHandler csvHandler;
-    private final LocalizationHandler localizationHandler;
+    private final MessageHandler localizationHandler;
 
     @Override
     public void launchTesting() {
