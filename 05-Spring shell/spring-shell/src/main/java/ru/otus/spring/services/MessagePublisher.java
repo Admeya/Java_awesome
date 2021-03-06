@@ -5,8 +5,6 @@ import java.util.Locale;
 
 public interface MessagePublisher {
 
-    String getIntroduceMessage();
-
     String getHelloMessage(String name);
 
     String getHintMessage();

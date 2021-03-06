@@ -15,10 +15,6 @@ public class MessageHanglerImpl implements MessagePublisher {
     private final MessageSource messageSource;
     private final ApplicationProperties applicationProperties;
 
-    public String getIntroduceMessage() {
-        return getMessage("introduce.user");
-    }
-
     public String getHelloMessage(String name) {
         return getMessage("hello.user", name);
     }
