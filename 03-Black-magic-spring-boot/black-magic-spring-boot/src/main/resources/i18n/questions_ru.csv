@@ -1,0 +1,6 @@
+Вопрос;Ответ a;Ответ b;Ответ c;Правильный ответ
+Какие атрибуты есть у <constructor-arg>;id;value;name;b,c
+Какие виды инъекций есть у спринга Spring?;constructor;getter;setter;a,c
+Какие есть скоупы джава бинов?;singleton;prototype;both;c
+Singleton бин может быть объявлен через ENUM;да;нет;не знаю;a
+SDK это:;Software Development Kit;Single Dependency Kit;Source Driven Kit;a
