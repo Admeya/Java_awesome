@@ -3,22 +3,19 @@ package ru.otus.spring.mapper;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import ru.otus.spring.model.Question;
 
 import java.io.IOException;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class CSVRecordToQuestionMapperTest {
 
-    private CSVRecordToQuestionMapper mapper;
-
-    @Before
-    public void setUp() {
-        mapper = new CSVRecordToQuestionMapper();
-    }
+    @SpyBean
+    private CSVRecordToQuestionMapper mapper = new CSVRecordToQuestionMapper();
 
     @Test
     public void map() throws IOException {
@@ -26,12 +23,12 @@ public class CSVRecordToQuestionMapperTest {
 
         Question resultQuestion = mapper.map(record);
 
-        Assert.assertEquals(1L, resultQuestion.getQuestionNumber());
-        Assert.assertEquals("Which attributes has <constructor-arg>", resultQuestion.getQuestion());
-        Assert.assertEquals("id", resultQuestion.getAnswerA());
-        Assert.assertEquals("value", resultQuestion.getAnswerB());
-        Assert.assertEquals("name", resultQuestion.getAnswerC());
-        Assert.assertEquals("b,c", resultQuestion.getRightAnswer());
+        assertThat(resultQuestion.getQuestionNumber()).isEqualTo(1L);
+        assertThat(resultQuestion.getQuestion()).isEqualTo("Which attributes has <constructor-arg>");
+        assertThat(resultQuestion.getAnswerA()).isEqualTo("id");
+        assertThat(resultQuestion.getAnswerB()).isEqualTo("value");
+        assertThat(resultQuestion.getAnswerC()).isEqualTo("name");
+        assertThat(resultQuestion.getRightAnswer()).isEqualTo("b,c");
     }
 
     private List<CSVRecord> getRecordList() throws IOException {

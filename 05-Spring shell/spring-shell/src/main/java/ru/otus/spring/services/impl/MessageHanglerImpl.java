@@ -4,20 +4,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import ru.otus.spring.configuration.ApplicationProperties;
-import ru.otus.spring.services.MessageHandler;
+import ru.otus.spring.services.MessagePublisher;
 
 import java.util.Locale;
 
 @Component
 @AllArgsConstructor
-public class MessageHanglerImpl implements MessageHandler {
+public class MessageHanglerImpl implements MessagePublisher {
 
     private final MessageSource messageSource;
     private final ApplicationProperties applicationProperties;
-
-    public String getIntroduceMessage() {
-        return getMessage("introduce.user");
-    }
 
     public String getHelloMessage(String name) {
         return getMessage("hello.user", name);
