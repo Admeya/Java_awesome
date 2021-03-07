@@ -1,7 +1,6 @@
 package ru.otus.spring.shell;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
@@ -29,22 +28,14 @@ public class ApplicationEventsCommands {
     @ShellMethod(value = "Testing", key = {"t", "test"})
     @ShellMethodAvailability(value = "testProcess")
     public String startTesting() {
-        if (isPublishEventCommandAvailable().isAvailable()) {
-            this.countCorrectAnswer = testingService.launchTesting();
-        }
+        this.countCorrectAnswer = testingService.launchTesting();
         return "Тестирование завершено";
     }
 
     @ShellMethod(value = "Show result", key = {"res", "result"})
     @ShellMethodAvailability(value = "showResult")
     public String goodbye() {
-        if (isPublishEventCommandAvailable().isAvailable()) {
-            testingService.checkExamine(userName, countCorrectAnswer);
-        }
+        testingService.checkExamine(userName, countCorrectAnswer);
         return "Возвращайтесь снова!";
-    }
-
-    private Availability isPublishEventCommandAvailable() {
-        return userName == null ? Availability.unavailable("Сначала залогиньтесь") : Availability.available();
     }
 }
