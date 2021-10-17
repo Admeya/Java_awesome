@@ -3,9 +3,7 @@ package ru.otus.spring.services;
 import java.util.Locale;
 
 
-public interface MessageHandler {
-
-    String getIntroduceMessage();
+public interface MessagePublisher {
 
     String getHelloMessage(String name);
 
