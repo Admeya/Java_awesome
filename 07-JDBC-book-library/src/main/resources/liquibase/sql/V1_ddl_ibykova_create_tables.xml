@@ -21,7 +21,7 @@
         </createTable>
     </changeSet>
     <changeSet author="irina" id="addAutoIncrementAuthor">
-        <addAutoIncrement columnName="author_id" columnDataType="BIGINT" incrementBy="1" tableName="authors"/>
+        <addAutoIncrement columnName="author_id" columnDataType="BIGINT" incrementBy="1" tableName="authors" startWith="2"/>
     </changeSet>
 
     <changeSet author="irina" id="createTableGenres">
@@ -35,7 +35,7 @@
         </createTable>
     </changeSet>
     <changeSet author="irina" id="addAutoIncrementBook">
-        <addAutoIncrement columnName="genre_id" columnDataType="BIGINT" incrementBy="1" tableName="genres"/>
+        <addAutoIncrement columnName="genre_id" columnDataType="BIGINT" incrementBy="1" tableName="genres" startWith="2"/>
     </changeSet>
 
     <changeSet author="irina" id="createTableBooks">
@@ -77,7 +77,7 @@
 
     </changeSet>
     <changeSet author="irina" id="addAutoIncrementGenre">
-        <addAutoIncrement columnName="book_id" columnDataType="BIGINT" incrementBy="1" tableName="books"/>
+        <addAutoIncrement columnName="book_id" columnDataType="BIGINT" incrementBy="1" tableName="books" startWith="2"/>
     </changeSet>
 
 
