@@ -13,6 +13,9 @@ public class Author {
 
     private String surname;
 
+    public Author() {
+    }
+
     public Author(long id, String name, String middleName, String surname) {
         this.id = id;
         this.name = name;

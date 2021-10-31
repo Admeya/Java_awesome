@@ -31,7 +31,7 @@ public class BookCommands {
         long authorId;
         long genreId;
 
-        Author author = authorDao.getAuthorByFIO(surname, middleName, name);
+        Author author = authorDao.getAuthorByFIO(name, middleName, surname);
         if (author == null) {
             authorId = authorDao.insert(new Author(name, middleName, surname));
         } else {
@@ -70,7 +70,8 @@ public class BookCommands {
                 author.getSurname(),
                 author.getName().substring(0,1),
                 author.getMiddlename().substring(0,1),
-                genre.getName());
+                genre.getName(),
+                "\n");
     }
 
     @ShellMethod(value = "Delete book by id")

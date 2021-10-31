@@ -76,7 +76,7 @@ class AuthorDaoJdbcTest {
     @Test
     void getAuthorByFIO() {
         Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME);
-        Author actualAuthor = authorDao.getAuthorByFIO(EXISTING_AUTHOR_SURNAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_NAME);
+        Author actualAuthor = authorDao.getAuthorByFIO(EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME);
         assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(expectedAuthor);
     }
 }

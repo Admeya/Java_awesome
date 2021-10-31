@@ -16,5 +16,5 @@ public interface AuthorDao {
 
     Author getAuthorById(long id);
 
-    Author getAuthorByFIO(String surname, String middlename, String name);
+    Author getAuthorByFIO( String name, String middlename, String surname);
 }

@@ -19,7 +19,11 @@ public class GenreCommands {
     public String insertGenre(
             @ShellOption String genre) {
         long id = genreDao.insert(new Genre(genre));
-        return "genre add:  " + genre + " with id: " + id;
+        return String.join(" ",
+                "genre add:",
+                genre,
+                "with id:",
+                String.valueOf(id));
     }
 
     @ShellMethod(value = "Get all genres")

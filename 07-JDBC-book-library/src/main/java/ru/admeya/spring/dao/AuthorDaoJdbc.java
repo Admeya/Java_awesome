@@ -61,7 +61,7 @@ public class AuthorDaoJdbc implements AuthorDao {
     }
 
     @Override
-    public Author getAuthorByFIO(String surname, String middlename, String name) {
+    public Author getAuthorByFIO( String name, String middlename, String surname) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("name", name);
         namedParameters.addValue("middlename", middlename);

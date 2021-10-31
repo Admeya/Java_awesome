@@ -16,18 +16,24 @@ public class AuthorCommands {
         this.authorDao = authorDaoJdbc;
     }
 
-   @ShellMethod(value = "Authors count")
+    @ShellMethod(value = "Authors count")
     public int countAuthors() {
         return authorDao.getCount();
     }
 
-   @ShellMethod(value = "Add author")
+    @ShellMethod(value = "Add author")
     public String insertAuthor(
             @ShellOption String name,
             @ShellOption String middleName,
             @ShellOption String surname) {
         long id = authorDao.insert(new Author(name, middleName, surname));
-        return "author add:  " + surname + " " + name + " " + middleName + " with id: " + id;
+        return String.join(" ",
+                "author add:",
+                name,
+                middleName,
+                surname,
+                "with id:",
+                String.valueOf(id));
     }
 
     @ShellMethod(value = "Get all authors")
@@ -54,8 +60,8 @@ public class AuthorCommands {
             @ShellOption String name,
             @ShellOption String middlename,
             @ShellOption String surname
-            ) {
-        Author author = authorDao.getAuthorByFIO(surname, middlename, name);
+    ) {
+        Author author = authorDao.getAuthorByFIO(name, middlename, surname);
         if (author == null) {
             return "Author not found";
         }
