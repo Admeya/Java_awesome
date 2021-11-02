@@ -43,13 +43,13 @@ public class GenreDaoJdbc implements GenreDao {
 
     @Override
     public List<Genre> getAllGenres() {
-        return namedParameterJdbcOperations.query("select * from genres", new GenreMapper());
+        return namedParameterJdbcOperations.query("select genre_id, `name`  from genres", new GenreMapper());
     }
 
     @Override
     public Genre getGenreById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        return namedParameterJdbcOperations.queryForObject("select * from genres where genre_id = :id ", params, new GenreMapper());
+        return namedParameterJdbcOperations.queryForObject("select genre_id, `name` from genres where genre_id = :id ", params, new GenreMapper());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class GenreDaoJdbc implements GenreDao {
 
         Genre genre = null;
         try {
-            genre = namedParameterJdbcOperations.queryForObject("select * from genres where `name` = :name ", params, new GenreMapper());
+            genre = namedParameterJdbcOperations.queryForObject("select genre_id, `name` from genres where `name` = :name ", params, new GenreMapper());
         } catch (Exception ex) {
         }
         return genre;

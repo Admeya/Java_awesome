@@ -42,12 +42,13 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public List<Book> getAllBooks() {
-        return namedParameterJdbcOperations.query("select * from books", new BookMapper());
+        return namedParameterJdbcOperations
+                .query("select book_id, author_id, genre_id, `name` from books", new BookMapper());
     }
 
     @Override
     public Book getBookById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        return namedParameterJdbcOperations.queryForObject("select * from books where book_id = :id ", params, new BookMapper());
+        return namedParameterJdbcOperations.queryForObject("select book_id, author_id, genre_id, `name` from books where book_id = :id ", params, new BookMapper());
     }
 }

@@ -51,13 +51,14 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     @Override
     public List<Author> getAllAuthors() {
-        return namedParameterJdbcOperations.query("select * from authors", new AuthorMapper());
+        return namedParameterJdbcOperations.query("select author_id, `name`, middlename, surname from authors", new AuthorMapper());
     }
 
     @Override
     public Author getAuthorById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        return namedParameterJdbcOperations.queryForObject("select * from authors where author_id = :id ", params, new AuthorMapper());
+        return namedParameterJdbcOperations
+                .queryForObject("select author_id, `name`, middlename, surname  from authors where author_id = :id ", params, new AuthorMapper());
     }
 
     @Override
@@ -70,7 +71,8 @@ public class AuthorDaoJdbc implements AuthorDao {
         Author author = null;
 
         try {
-            author = namedParameterJdbcOperations.queryForObject("select * from authors " +
+            author = namedParameterJdbcOperations
+                    .queryForObject("select author_id, `name`, middlename, surname from authors " +
                     "where name = :name and middlename = :middlename and surname = :surname ", namedParameters, new AuthorMapper())
             ;
         } catch (Exception ex) {
