@@ -8,6 +8,8 @@ import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Genre;
 
+import java.util.List;
+
 @ShellComponent
 public class BookCommands {
 
@@ -53,8 +55,20 @@ public class BookCommands {
     @ShellMethod(value = "Get all books")
     public String getAllBooks() {
         StringBuilder sb = new StringBuilder();
-        bookDao.getAllBooks().forEach(book -> sb.append(getBook(book)));
+        List<Genre> genres = genreDao.getAllGenres();
+        List<Author> authors = authorDao.getAllAuthors();
+        bookDao.getAllBooks().forEach(book -> sb.append(getBook(book, genres, authors)));
         return sb.toString();
+    }
+
+    private String getBook(Book book, List<Genre> genres, List<Author> authors) {
+        long authorId = book.getAuthorId();
+        long genreId = book.getGenreId();
+
+        Author author = authors.stream().filter(author1-> author1.getId()==authorId).findFirst().get();
+        Genre genre = genres.stream().filter(genre1 -> genre1.getGenreId()==genreId).findFirst().get();
+
+        return formatBook(book, author, genre);
     }
 
     private String getBook(Book book) {
@@ -64,6 +78,10 @@ public class BookCommands {
         Author author = authorDao.getAuthorById(authorId);
         Genre genre = genreDao.getGenreById(genreId);
 
+        return formatBook(book, author, genre);
+    }
+
+    private String formatBook(Book book, Author author, Genre genre) {
         return String.join(" ",
                 String.valueOf(book.getBookId()),
                 book.getName(),

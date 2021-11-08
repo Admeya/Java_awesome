@@ -15,6 +15,7 @@ import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,11 +98,11 @@ class BookCommandsTest {
                 new Book(2, EXISTING_AUTHOR_ID, EXISTING_GENRE_ID, "cooking")
         );
 
-        given(authorDao.getAuthorById(EXISTING_AUTHOR_ID))
-                .willReturn(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME));
+        given(authorDao.getAllAuthors())
+                .willReturn(List.of(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME)));
 
-        given(genreDao.getGenreById(EXISTING_GENRE_ID))
-                .willReturn(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME));
+        given(genreDao.getAllGenres())
+                .willReturn(List.of(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME)));
 
         given(bookDao.getAllBooks()).willReturn(books);
 
