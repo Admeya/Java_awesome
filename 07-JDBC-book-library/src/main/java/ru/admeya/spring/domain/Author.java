@@ -2,15 +2,27 @@ package ru.admeya.spring.domain;
 
 import lombok.Data;
 
-@Data
-public class Author {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Data
+@Entity
+@Table(name="authors")
+public class Author implements Cloneable {
+
+    @Id
+    @Column(name="author_id")
     private long id;
 
+    @Column(name="name")
     private String name;
 
+    @Column(name="middlename")
     private String middlename;
 
+    @Column(name="surname")
     private String surname;
 
     public Author() {

@@ -1,32 +1,51 @@
 package ru.admeya.spring.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Data
+@Entity
+@Table(name="books")
+@NamedEntityGraph(name = "book-graph-entity", attributeNodes = {
+        @NamedAttributeNode("authors"),
+        @NamedAttributeNode("genres")
+})
 public class Book {
 
+    @Id
+    @Column(name="book_id")
     private long bookId;
 
-    private long authorId;
-
-    private long genreId;
-
+    @Column(name="name")
     private String name;
 
-    private String authorName;
+    @OneToMany(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id")
+    private Set<Author> authors;
 
-    private String genreName;
+    @OneToMany(targetEntity = Genre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "genre_id")
+    private Set<Genre> genres;
 
-    public Book(long bookId, long authorId, long genreId, String name) {
+    public Book(long bookId, Set<Author> authors, Set<Genre> genres, String name) {
         this.bookId = bookId;
-        this.authorId = authorId;
-        this.genreId = genreId;
         this.name = name;
+        this.authors = authors;
+        this.genres = genres;
     }
 
-    public Book(long authorId, long genreId, String name) {
-        this.authorId = authorId;
-        this.genreId = genreId;
+    public Book(Set<Author> authors, Set<Genre> genres, String name) {
         this.name = name;
+        this.authors = authors;
+        this.genres = genres;
+    }
+
+    public Book() {
+
     }
 }

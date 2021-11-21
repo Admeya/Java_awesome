@@ -2,11 +2,24 @@ package ru.admeya.spring.domain;
 
 import lombok.Data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Data
+@Entity
+@Table(name="genres")
 public class Genre {
 
+    public Genre() {
+    }
+
+    @Id
+    @Column(name="genre_id")
     private long genreId;
 
+    @Column(name="name")
     private String name;
 
     public Genre(long genreId, String name) {

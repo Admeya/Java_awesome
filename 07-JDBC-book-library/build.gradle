@@ -2,10 +2,10 @@ buildscript {
     ext {
         springBootVersion = '2.5.4'
         lombokVersion = '1.18.6'
-        jdbcVersion = '2.5.5'
+        jpaVersion = '2.6.0'
         h2Version = '1.4.200'
         liquibaseCoreVersion = '4.0.0'
-        shellVersion = '2.0.1.RELEASE'
+
         devToolsVersion = '2.5.6'
         springBootTestVersion = '2.5.6'
     }
@@ -27,10 +27,10 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     implementation "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-jdbc:${jdbcVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${jpaVersion}"
+
     implementation "com.h2database:h2:${h2Version}"
     implementation "org.liquibase:liquibase-core:${liquibaseCoreVersion}"
-    implementation "org.springframework.shell:spring-shell-starter:${shellVersion}"
     implementation "org.springframework.boot:spring-boot-devtools:${devToolsVersion}"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootTestVersion}"
