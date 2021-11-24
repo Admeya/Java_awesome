@@ -2,6 +2,7 @@ package ru.admeya.spring.service;
 
 import org.springframework.stereotype.Service;
 import ru.admeya.spring.domain.Genre;
+import ru.admeya.spring.jpa.CommentRepositoryJpa;
 import ru.admeya.spring.jpa.GenreRepositoryJpa;
 
 import java.util.List;
@@ -11,8 +12,8 @@ public class GenreService {
 
     private final GenreRepositoryJpa genreRepository;
 
-    public GenreService(GenreRepositoryJpa genreDaoJdbc) {
-        this.genreRepository = genreDaoJdbc;
+    public GenreService(GenreRepositoryJpa genreRepository) {
+        this.genreRepository = genreRepository;
     }
 
     public Genre insertGenre(String genre) {

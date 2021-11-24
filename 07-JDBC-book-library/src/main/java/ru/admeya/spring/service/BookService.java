@@ -3,6 +3,7 @@ package ru.admeya.spring.service;
 import org.springframework.stereotype.Service;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
+import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.domain.Genre;
 import ru.admeya.spring.jpa.*;
 
@@ -15,11 +16,13 @@ public class BookService {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final GenreRepositoryJpa genreRepository;
+    private final CommentRepositoryJpa commentRepository;
 
-    public BookService(AuthorRepositoryJpa authorRepository, BookRepositoryJpa bookRepository, GenreRepositoryJpa genreRepository) {
+    public BookService(AuthorRepositoryJpa authorRepository, BookRepositoryJpa bookRepository, GenreRepositoryJpa genreRepository, CommentRepositoryJpa commentRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
         this.genreRepository = genreRepository;
+        this.commentRepository = commentRepository;
     }
 
     public Book insertBook(
@@ -27,12 +30,14 @@ public class BookService {
             String middleName,
             String surname,
             String bookName,
-            String genreName) {
+            String genreName,
+            String comment) {
 
         Author author = findAuthor(name, middleName, surname);
         Genre genre = findGenre(genreName);
+        Set<Comment> comments = Set.of(new Comment(comment));
 
-        return bookRepository.save(new Book(Set.of(author), Set.of(genre), bookName));
+        return bookRepository.save(new Book(Set.of(author), Set.of(genre), bookName, comments));
     }
 
     public List<Book> getAllBooks() {
