@@ -7,6 +7,7 @@ import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.domain.Genre;
 import ru.admeya.spring.jpa.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class BookService {
         this.commentRepository = commentRepository;
     }
 
+    @Transactional
     public Book insertBook(
             String name,
             String middleName,
@@ -40,14 +42,17 @@ public class BookService {
         return bookRepository.save(new Book(Set.of(author), Set.of(genre), bookName, comments));
     }
 
+    @Transactional
     public List<Book> getAllBooks() {
         return bookRepository.getAllBooks();
     }
 
+    @Transactional
     public void delBookById(long id) {
         bookRepository.deleteById(id);
     }
 
+    @Transactional
     public Book getBookById(long id) {
         return bookRepository.findById(id).get();
     }

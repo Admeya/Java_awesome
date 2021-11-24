@@ -2,7 +2,6 @@ package ru.admeya.spring.jpa;
 
 import ru.admeya.spring.domain.Genre;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +10,7 @@ public interface GenreRepository {
     Genre save(Genre genre);
 
     Optional<Genre> findById(long id);
+
     Optional<Genre> findByName(String genreName);
 
     List<Genre> findAll();

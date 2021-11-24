@@ -26,18 +26,22 @@ public class AuthorService {
         return authorRepository.save(new Author(name, middleName, surname));
     }
 
+    @Transactional
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
 
+    @Transactional
     public Author getAuthorById(long id) {
         return authorRepository.findById(id).get();
     }
 
+    @Transactional
     public void delAuthorById(long id) {
         authorRepository.deleteById(id);
     }
 
+    @Transactional
     public Author getAuthorByFIO(
             String name,
             String middlename,

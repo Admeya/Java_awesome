@@ -1,7 +1,6 @@
 package ru.admeya.spring.jpa;
 
 import ru.admeya.spring.domain.Comment;
-import ru.admeya.spring.domain.Genre;
 
 import java.util.List;
 import java.util.Optional;

@@ -9,17 +9,17 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="comments")
+@Table(name = "comments")
 public class Comment {
 
     public Comment() {
     }
 
     @Id
-    @Column(name="comment_id")
+    @Column(name = "comment_id")
     private long commentId;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
     public Comment(long commentId, String description) {

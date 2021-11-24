@@ -2,7 +2,6 @@ package ru.admeya.spring.jpa;
 
 import org.springframework.stereotype.Repository;
 import ru.admeya.spring.domain.Comment;
-import ru.admeya.spring.domain.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

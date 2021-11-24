@@ -1,16 +1,13 @@
 package ru.admeya.spring.domain;
 
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
-@Table(name="books")
+@Table(name = "books")
 @NamedEntityGraph(name = "book-graph-entity", attributeNodes = {
         @NamedAttributeNode("authors"),
         @NamedAttributeNode("genres")
@@ -18,10 +15,10 @@ import java.util.Set;
 public class Book {
 
     @Id
-    @Column(name="book_id")
+    @Column(name = "book_id")
     private long bookId;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @OneToMany(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

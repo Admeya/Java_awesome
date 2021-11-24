@@ -9,7 +9,6 @@
     <include file="sql/V1_ddl_ibykova_create_tables.xml" relativeToChangelogFile="true"/>
     <include file="sql/V2_dml_ibykova_add-data.xml" relativeToChangelogFile="true"/>
     <include file="sql/V3_ddl_ibykova_create_table_comments.xml" relativeToChangelogFile="true"/>
-    <include file="sql/V3_ddl_ibykova_create_table_comments.xml" relativeToChangelogFile="true"/>
     <include file="sql/V4_dml_ibykova_add-data-comments.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

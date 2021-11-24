@@ -9,20 +9,20 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="authors")
-public class Author implements Cloneable {
+@Table(name = "authors")
+public class Author {
 
     @Id
-    @Column(name="author_id")
+    @Column(name = "author_id")
     private long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="middlename")
+    @Column(name = "middlename")
     private String middlename;
 
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
 
     public Author() {

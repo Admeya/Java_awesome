@@ -9,17 +9,17 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="genres")
+@Table(name = "genres")
 public class Genre {
 
     public Genre() {
     }
 
     @Id
-    @Column(name="genre_id")
+    @Column(name = "genre_id")
     private long genreId;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     public Genre(long genreId, String name) {
