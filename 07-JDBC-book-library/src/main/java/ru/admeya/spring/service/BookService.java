@@ -10,20 +10,19 @@ import ru.admeya.spring.jpa.*;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
 
-    private final AuthorRepository authorRepository;
+    private final AuthorService authorService;
     private final BookRepository bookRepository;
-    private final GenreRepositoryJpa genreRepository;
-    private final CommentRepositoryJpa commentRepository;
+    private final GenreService genreService;
 
-    public BookService(AuthorRepositoryJpa authorRepository, BookRepositoryJpa bookRepository, GenreRepositoryJpa genreRepository, CommentRepositoryJpa commentRepository) {
-        this.authorRepository = authorRepository;
+    public BookService(AuthorService authorService, BookRepositoryJpa bookRepository, GenreService genreService) {
+        this.authorService = authorService;
         this.bookRepository = bookRepository;
-        this.genreRepository = genreRepository;
-        this.commentRepository = commentRepository;
+        this.genreService = genreService;
     }
 
     @Transactional
@@ -35,8 +34,8 @@ public class BookService {
             String genreName,
             String comment) {
 
-        Author author = findAuthor(name, middleName, surname);
-        Genre genre = findGenre(genreName);
+        Author author = authorService.getAuthorByFIO(name, middleName, surname);
+        Genre genre = genreService.getGenreByName(genreName);
         Set<Comment> comments = Set.of(new Comment(comment));
 
         return bookRepository.save(new Book(Set.of(author), Set.of(genre), bookName, comments));
@@ -57,26 +56,9 @@ public class BookService {
         return bookRepository.findById(id).get();
     }
 
-    private Author findAuthor(String name, String middleName, String surname) {
-        Author author;
-        List<Author> authors = authorRepository.findByFIO(name, middleName, surname);
-        if (authors.isEmpty()) {
-            author = new Author(name, middleName, surname);
-        } else {
-            author = authors.get(0);
-        }
-        return author;
-    }
-
-    private Genre findGenre(String genreName) {
-        Genre genre;
-
-        Genre existGenre = genreRepository.findByName(genreName).get();
-        if (existGenre == null) {
-            genre = new Genre(genreName);
-        } else {
-            genre = existGenre;
-        }
-        return genre;
+    public List<Book> getBooksByAuthorId(long authorId) {
+        Author author = authorService.getAuthorById(authorId);
+        List<Book> books = bookRepository.getAllBooks().stream().filter(book -> book.getAuthors().contains(author)).collect(Collectors.toList());
+       return books;
     }
 }

@@ -1,6 +1,5 @@
 package ru.admeya.spring.jpa;
 
-import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +11,14 @@ import ru.admeya.spring.domain.Author;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("JPA authors should be")
 @DataJpaTest
 @Import(AuthorRepositoryJpa.class)
 class AuthorRepositoryJpaTest {
 
-    private static final int EXPECTED_AUTHORS_COUNT = 1;
+    private static final int EXPECTED_AUTHORS_COUNT = 2;
     private static final Long EXISTING_AUTHOR_ID = 1L;
     private static final String EXISTING_AUTHOR_NAME = "John";
     private static final String EXISTING_AUTHOR_MIDDLENAME = "Valter";
@@ -63,11 +62,13 @@ class AuthorRepositoryJpaTest {
     @DisplayName("Should return all authors")
     @Test
     void getAllAuthors() {
-        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME);
+        List<Author> expectedAuthors = List.of(
+                new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME),
+                new Author(2, "Ivan", "Ivanovich", "Ivanov"));
         List<Author> authors = authorRepositoryJpa.findAll();
         assertThat(authors)
                 .usingFieldByFieldElementComparator()
-                .containsExactlyInAnyOrder(expectedAuthor);
+                .containsExactlyInAnyOrderElementsOf(expectedAuthors);
     }
 
     @DisplayName("Should get authors by id")

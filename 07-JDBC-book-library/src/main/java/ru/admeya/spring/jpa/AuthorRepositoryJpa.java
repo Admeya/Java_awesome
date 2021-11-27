@@ -2,11 +2,9 @@ package ru.admeya.spring.jpa;
 
 import org.springframework.stereotype.Repository;
 import ru.admeya.spring.domain.Author;
+import ru.admeya.spring.domain.Book;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 

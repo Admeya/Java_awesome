@@ -13,8 +13,9 @@ import ru.admeya.spring.domain.Genre;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("JPA books should be")
 @DataJpaTest
@@ -22,8 +23,7 @@ import static org.assertj.core.api.Assertions.*;
 class BookRepositoryJpaTest {
 
     private static final Long EXISTING_BOOK_ID = 1L;
-    private static final int EXISTING_AUTHOR_ID = 1;
-    private static final int EXISTING_GENRE_ID = 1;
+    private static final Long EXISTING_AUTHOR_ID = 1L;
     private static final String EXISTING_BOOK_NAME = "Travelling";
 
     @Autowired
@@ -60,24 +60,41 @@ class BookRepositoryJpaTest {
     @DisplayName("Should return all books")
     @Test
     void getAllBooks() {
-        Set<Author> authors = Set.of(new Author(1, "John", "Valter", "Scott"));
+        Set<Author> authors = Set.of(
+                new Author(1, "John", "Valter", "Scott"),
+                new Author(2, "Ivan", "Ivanovich", "Ivanov"));
         Set<Genre> genres = Set.of(new Genre(1, "sport"));
-        Set<Comment> comments = Set.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
+        Set<Comment> comments = Set.of(
+                new Comment(1, "Very good book"),
+                new Comment(2, "Not so bad"));
         Book expectedBook = new Book(EXISTING_BOOK_ID, authors, genres, EXISTING_BOOK_NAME, comments);
         List<Book> books = bookRepositoryJpa.getAllBooks();
         assertThat(books)
-                .usingFieldByFieldElementComparator()
+                .usingRecursiveFieldByFieldElementComparator()
                 .containsExactlyInAnyOrder(expectedBook);
     }
 
     @DisplayName("Should get books by id")
     @Test
     void getBookById() {
-        Set<Author> authors = Set.of(new Author(1, "John", "Valter", "Scott"));
+        Set<Author> authors = Set.of(new Author(1, "John", "Valter", "Scott"),
+                new Author(2, "Ivan", "Ivanovich", "Ivanov"));
         Set<Genre> genres = Set.of(new Genre(1, "sport"));
         Set<Comment> comments = Set.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
         Book expectedBook = new Book(EXISTING_BOOK_ID, authors, genres, EXISTING_BOOK_NAME, comments);
         Book actualBook = bookRepositoryJpa.findById(expectedBook.getBookId()).get();
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
+    }
+
+    @DisplayName("Should get comments by book id")
+    @Test
+    void getCommentByBookId() {
+        Set<String> expectedComments = Set.of("Very good book", "Not so bad");
+        Book book = bookRepositoryJpa.findById(EXISTING_BOOK_ID).get();
+        Set<Comment> actualComments = book.getComments();
+        assertThat(actualComments)
+                .hasSize(2)
+                .extracting(comment -> comment.getDescription())
+                .containsExactlyInAnyOrderElementsOf(expectedComments);
     }
 }

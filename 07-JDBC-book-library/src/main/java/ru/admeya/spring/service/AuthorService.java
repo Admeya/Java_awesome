@@ -47,6 +47,13 @@ public class AuthorService {
             String middlename,
             String surname
     ) {
-        return authorRepository.findByFIO(name, middlename, surname).get(0);
+        Author author;
+        List<Author> authors = authorRepository.findByFIO(name, middlename, surname);
+        if (authors.isEmpty()) {
+            author = new Author(name, middlename, surname);
+        } else {
+            author = authors.get(0);
+        }
+        return author;
     }
 }

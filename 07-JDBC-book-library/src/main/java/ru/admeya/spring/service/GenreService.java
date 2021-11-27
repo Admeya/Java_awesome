@@ -38,6 +38,14 @@ public class GenreService {
 
     @Transactional
     public Genre getGenreByName(String genreName) {
-        return genreRepository.findByName(genreName).get();
+        Genre genre;
+
+        Genre existGenre = genreRepository.findByName(genreName).get();
+        if (existGenre == null) {
+            genre = new Genre(genreName);
+        } else {
+            genre = existGenre;
+        }
+        return genre;
     }
 }

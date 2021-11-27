@@ -43,9 +43,6 @@
             <column name="book_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="BOOKS_PK"/>
             </column>
-            <column name="author_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
             <column name="genre_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -53,16 +50,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
-        <addForeignKeyConstraint  baseColumnNames="author_id"
-                                  baseTableName="books"
-                                  baseTableSchemaName="public"
-                                  constraintName="fk_author_books"
-                                  onDelete="CASCADE"
-                                  onUpdate="RESTRICT"
-                                  referencedColumnNames="author_id"
-                                  referencedTableName="authors"
-                                  referencedTableSchemaName="public"/>
 
         <addForeignKeyConstraint  baseColumnNames="genre_id"
                                   baseTableName="books"

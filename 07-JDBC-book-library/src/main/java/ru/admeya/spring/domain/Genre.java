@@ -12,9 +12,6 @@ import javax.persistence.Table;
 @Table(name = "genres")
 public class Genre {
 
-    public Genre() {
-    }
-
     @Id
     @Column(name = "genre_id")
     private long genreId;
@@ -22,12 +19,15 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
-    public Genre(long genreId, String name) {
-        this.genreId = genreId;
-        this.name = name;
+    public Genre() {
     }
 
     public Genre(String name) {
+        this.name = name;
+    }
+
+    public Genre(long genreId, String name) {
+        this.genreId = genreId;
         this.name = name;
     }
 
