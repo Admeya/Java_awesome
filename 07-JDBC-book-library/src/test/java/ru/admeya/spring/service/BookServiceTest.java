@@ -8,7 +8,7 @@ import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.domain.Genre;
-import ru.admeya.spring.jpa.BookRepositoryJpa;
+import ru.admeya.spring.jpa.BookRepository;
 
 import java.util.List;
 import java.util.Set;
@@ -23,7 +23,7 @@ class BookServiceTest {
     private AuthorService authorService;
 
     @Mock
-    private BookRepositoryJpa bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
     private BookService bookService;
@@ -44,7 +44,7 @@ class BookServiceTest {
                 "Alyaska",
                 Set.of());
         List<Book> expectedBooks = List.of(expectedBook1, expectedBook2);
-        when(bookRepository.getAllBooks()).thenReturn(expectedBooks);
+        when(bookRepository.findAll()).thenReturn(expectedBooks);
 
         List<Book> actualBooks = bookService.getBooksByAuthorId(1L);
 

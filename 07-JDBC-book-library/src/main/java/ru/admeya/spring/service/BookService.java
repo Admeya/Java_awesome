@@ -19,7 +19,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final GenreService genreService;
 
-    public BookService(AuthorService authorService, BookRepositoryJpa bookRepository, GenreService genreService) {
+    public BookService(AuthorService authorService, BookRepository bookRepository, GenreService genreService) {
         this.authorService = authorService;
         this.bookRepository = bookRepository;
         this.genreService = genreService;
@@ -43,7 +43,7 @@ public class BookService {
 
     @Transactional
     public List<Book> getAllBooks() {
-        return bookRepository.getAllBooks();
+        return bookRepository.findAll();
     }
 
     @Transactional
@@ -56,9 +56,10 @@ public class BookService {
         return bookRepository.findById(id).get();
     }
 
+    @Transactional
     public List<Book> getBooksByAuthorId(long authorId) {
         Author author = authorService.getAuthorById(authorId);
-        List<Book> books = bookRepository.getAllBooks().stream().filter(book -> book.getAuthors().contains(author)).collect(Collectors.toList());
+        List<Book> books = bookRepository.findAll().stream().filter(book -> book.getAuthors().contains(author)).collect(Collectors.toList());
        return books;
     }
 }

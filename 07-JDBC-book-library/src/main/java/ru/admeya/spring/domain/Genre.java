@@ -1,13 +1,16 @@
 package ru.admeya.spring.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "genres")
 public class Genre {
@@ -29,13 +32,5 @@ public class Genre {
     public Genre(long genreId, String name) {
         this.genreId = genreId;
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return String.join(" ",
-                String.valueOf(genreId),
-                name,
-                "\n");
     }
 }

@@ -3,7 +3,6 @@ package ru.admeya.spring.service;
 import org.springframework.stereotype.Service;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.jpa.AuthorRepository;
-import ru.admeya.spring.jpa.AuthorRepositoryJpa;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -13,12 +12,12 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
-    public AuthorService(AuthorRepositoryJpa authorDaoJdbc) {
-        this.authorRepository = authorDaoJdbc;
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
-    public int countAuthors() {
-        return authorRepository.getCount();
+    public long countAuthors() {
+        return authorRepository.count();
     }
 
     @Transactional
@@ -48,7 +47,7 @@ public class AuthorService {
             String surname
     ) {
         Author author;
-        List<Author> authors = authorRepository.findByFIO(name, middlename, surname);
+        List<Author> authors = authorRepository.findByNameAndMiddlenameAndSurname(name, middlename, surname);
         if (authors.isEmpty()) {
             author = new Author(name, middlename, surname);
         } else {

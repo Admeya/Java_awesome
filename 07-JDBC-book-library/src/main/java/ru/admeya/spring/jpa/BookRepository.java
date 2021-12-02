@@ -1,17 +1,12 @@
 package ru.admeya.spring.jpa;
 
+import org.springframework.data.repository.CrudRepository;
 import ru.admeya.spring.domain.Book;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BookRepository {
+public interface BookRepository extends CrudRepository<Book, Long> {
 
-    Book save(Book book);
-
-    Optional<Book> findById(long id);
-
-    List<Book> getAllBooks();
-
-    void deleteById(long id);
+    @Override
+    List<Book> findAll();
 }

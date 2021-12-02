@@ -3,7 +3,7 @@ package ru.admeya.spring.service;
 import org.springframework.stereotype.Service;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
-import ru.admeya.spring.jpa.CommentRepositoryJpa;
+import ru.admeya.spring.jpa.CommentRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.Set;
 @Service
 public class CommentService {
 
-    private final CommentRepositoryJpa commentRepositoryJpa;
+    private final CommentRepository commentRepositoryJpa;
     private final BookService bookService;
 
-    public CommentService(CommentRepositoryJpa commentRepositoryJpa, BookService bookService) {
-        this.commentRepositoryJpa = commentRepositoryJpa;
+    public CommentService(CommentRepository commentRepository, BookService bookService) {
+        this.commentRepositoryJpa = commentRepository;
         this.bookService = bookService;
 
     }

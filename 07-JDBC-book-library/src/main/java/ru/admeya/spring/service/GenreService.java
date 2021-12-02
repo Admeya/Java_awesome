@@ -2,7 +2,7 @@ package ru.admeya.spring.service;
 
 import org.springframework.stereotype.Service;
 import ru.admeya.spring.domain.Genre;
-import ru.admeya.spring.jpa.GenreRepositoryJpa;
+import ru.admeya.spring.jpa.GenreRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public class GenreService {
 
-    private final GenreRepositoryJpa genreRepository;
+    private final GenreRepository genreRepository;
 
-    public GenreService(GenreRepositoryJpa genreRepository) {
+    public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
     }
 

@@ -1,17 +1,12 @@
 package ru.admeya.spring.jpa;
 
+import org.springframework.data.repository.CrudRepository;
 import ru.admeya.spring.domain.Comment;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CommentRepository {
+public interface CommentRepository extends CrudRepository<Comment, Long> {
 
-    Comment save(Comment comment);
-
-    Optional<Comment> findById(long id);
-
+    @Override
     List<Comment> findAll();
-
-    void deleteById(long id);
 }
