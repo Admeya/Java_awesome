@@ -41,7 +41,8 @@ public class CommentService {
         commentRepositoryJpa.deleteById(id);
     }
 
-    public Set<Comment> getCommentByBookId(long bookId) {
+    @Transactional
+    public List<Comment> getCommentByBookId(long bookId) {
         Book book = bookService.getBookById(bookId);
         return book.getComments();
     }

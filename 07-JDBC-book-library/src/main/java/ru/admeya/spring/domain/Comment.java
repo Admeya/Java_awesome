@@ -33,7 +33,8 @@ public class Comment {
         this.description = description;
     }
 
-    public Comment(long commentId, String description) {
+    public Comment(long commentId, long bookId, String description) {
+        this.bookId = bookId;
         this.commentId = commentId;
         this.description = description;
     }

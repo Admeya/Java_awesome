@@ -32,17 +32,17 @@ class BookServiceTest {
     void getBookByAuthorId() {
         when(authorService.getAuthorById(1L)).thenReturn(new Author(1, "John", "Valter", "Scott"));
 
-        Set<Author> authors1 = Set.of(new Author(1, "John", "Valter", "Scott"),
+        List<Author> authors1 = List.of(new Author(1, "John", "Valter", "Scott"),
                 new Author(2, "Ivan", "Ivanovich", "Ivanov"));
-        Set<Genre> genres1 = Set.of(new Genre(1, "sport"));
-        Set<Comment> comments1 = Set.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
+        List<Genre> genres1 = List.of(new Genre(1, "sport"));
+        List<Comment> comments1 = List.of(new Comment(1, 1, "Very good book"), new Comment(2, 1, "Not so bad"));
         Book expectedBook1 = new Book(1, authors1, genres1, "Travelling", comments1);
         Book expectedBook2 = new Book(
                 2,
-                Set.of(new Author(1, "John", "Valter", "Scott")),
-                Set.of(),
+                List.of(new Author(1, "John", "Valter", "Scott")),
+                List.of(),
                 "Alyaska",
-                Set.of());
+                List.of());
         List<Book> expectedBooks = List.of(expectedBook1, expectedBook2);
         when(bookRepository.findAll()).thenReturn(expectedBooks);
 
