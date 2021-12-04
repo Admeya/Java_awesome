@@ -10,12 +10,14 @@
             <column name="name" value="John"/>
             <column name="middlename" value="Valter"/>
             <column name="surname" value="Scott"/>
+            <column name="book_id" value="1"/>
         </insert>
         <insert tableName="authors">
             <column name="author_id"  value="2"/>
             <column name="name" value="Ivan"/>
             <column name="middlename" value="Ivanovich"/>
             <column name="surname" value="Ivanov"/>
+            <column name="book_id" value="1"/>
         </insert>
     </changeSet>
     <changeSet author="irina" id="insert-genre">

@@ -3,6 +3,7 @@ package ru.admeya.spring.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,6 +23,10 @@ public class Author {
 
     @Column(name = "surname")
     private String surname;
+
+    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id")
+    private List<Book> books;
 
     public Author() {
     }

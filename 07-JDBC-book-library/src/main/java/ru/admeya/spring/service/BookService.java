@@ -1,16 +1,16 @@
 package ru.admeya.spring.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.domain.Genre;
-import ru.admeya.spring.jpa.*;
+import ru.admeya.spring.jpa.BookRepository;
+import ru.admeya.spring.jpa.BookRepositoryJpa;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -41,7 +41,7 @@ public class BookService {
         return bookRepository.save(new Book(Set.of(author), Set.of(genre), bookName, comments));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         return bookRepository.getAllBooks();
     }
@@ -51,14 +51,14 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Book getBookById(long id) {
         return bookRepository.findById(id).get();
     }
 
+    @Transactional(readOnly = true)
     public List<Book> getBooksByAuthorId(long authorId) {
         Author author = authorService.getAuthorById(authorId);
-        List<Book> books = bookRepository.getAllBooks().stream().filter(book -> book.getAuthors().contains(author)).collect(Collectors.toList());
-       return books;
+        return author.getBooks();
     }
 }
