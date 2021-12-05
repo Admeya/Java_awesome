@@ -1,19 +1,19 @@
 package ru.admeya.spring.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "books")
-@NamedEntityGraph(name = "book-graph-entity", attributeNodes = {
-        @NamedAttributeNode("authors"),
-        @NamedAttributeNode("genres"),
-        @NamedAttributeNode("comments")
-})
 public class Book {
 
     @Id
@@ -23,20 +23,23 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(targetEntity = Author.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Author> authors;
 
-    @OneToMany(targetEntity = Genre.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Genre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id")
-    private Set<Genre> genres;
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Genre> genres;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
-    private Set<Comment> comments;
+    @BatchSize(size = 5)
+    private List<Comment> comments;
 
-    public Book(long bookId, Set<Author> authors, Set<Genre> genres, String name, Set<Comment> comments) {
+    public Book(long bookId, List<Author> authors, List<Genre> genres, String name, List<Comment> comments) {
         this.bookId = bookId;
         this.name = name;
         this.authors = authors;
@@ -44,7 +47,7 @@ public class Book {
         this.comments = comments;
     }
 
-    public Book(Set<Author> authors, Set<Genre> genres, String name, Set<Comment> comments) {
+    public Book(List<Author> authors, List<Genre> genres, String name, List<Comment> comments) {
         this.name = name;
         this.authors = authors;
         this.genres = genres;

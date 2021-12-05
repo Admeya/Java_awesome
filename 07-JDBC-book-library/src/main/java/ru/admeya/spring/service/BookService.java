@@ -10,7 +10,6 @@ import ru.admeya.spring.jpa.BookRepository;
 import ru.admeya.spring.jpa.BookRepositoryJpa;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BookService {
@@ -36,9 +35,9 @@ public class BookService {
 
         Author author = authorService.getAuthorByFIO(name, middleName, surname);
         Genre genre = genreService.getGenreByName(genreName);
-        Set<Comment> comments = Set.of(new Comment(comment));
+        List<Comment> comments = List.of(new Comment(comment));
 
-        return bookRepository.save(new Book(Set.of(author), Set.of(genre), bookName, comments));
+        return bookRepository.save(new Book(List.of(author), List.of(genre), bookName, comments));
     }
 
     @Transactional(readOnly = true)

@@ -11,7 +11,6 @@ import ru.admeya.spring.domain.Genre;
 import ru.admeya.spring.jpa.BookRepositoryJpa;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -30,24 +29,52 @@ class BookServiceTest {
 
     @Test
     void getBookByAuthorId() {
-        when(authorService.getAuthorById(1L)).thenReturn(new Author(1, "John", "Valter", "Scott"));
-
-        Set<Author> authors1 = Set.of(new Author(1, "John", "Valter", "Scott"),
-                new Author(2, "Ivan", "Ivanovich", "Ivanov"));
-        Set<Genre> genres1 = Set.of(new Genre(1, "sport"));
-        Set<Comment> comments1 = Set.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
-        Book expectedBook1 = new Book(1, authors1, genres1, "Travelling", comments1);
-        Book expectedBook2 = new Book(
-                2,
-                Set.of(new Author(1, "John", "Valter", "Scott")),
-                Set.of(),
-                "Alyaska",
-                Set.of());
-        List<Book> expectedBooks = List.of(expectedBook1, expectedBook2);
-        when(bookRepository.getAllBooks()).thenReturn(expectedBooks);
+        Author author1 = new Author(1, "John", "Valter", "Scott");
+        Author author2 = new Author(2, "Ivan", "Ivanovich", "Ivanov");
+        when(authorService.getAuthorById(1L)).thenReturn(author1);
+        List<Author> authors = List.of(author1, author2);
+        List<Genre> genres1 = List.of(new Genre(1, "sport"));
+        List<Comment> comments1 = List.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
+        Book expectedBook1 = new Book(1, authors, genres1, "Travelling", comments1);
+        Book expectedBook2 = new Book(2, List.of(author1), List.of(), "Alyaska", List.of());
 
         List<Book> actualBooks = bookService.getBooksByAuthorId(1L);
 
-        assertThat(expectedBooks).usingRecursiveComparison().isEqualTo(actualBooks);
+        // У Джона Уолтера (автора с номером 1L) 2 книги, первая Travelling
+        assertThat(actualBooks)
+                .hasSize(2)
+                .filteredOn(book ->
+                        book.getName().equals(expectedBook1.getName()))
+                .hasSize(1);
+        // У Джона Уолтера (автора с номером 1L) 2 книги, вторая - Alyaska
+        assertThat(actualBooks)
+                .hasSize(2)
+                .filteredOn(book ->
+                        book.getName().equals(expectedBook2.getName()))
+                .hasSize(1);
+        // Проверяем, что у первой книги (Travelling) два автора, первый из которых Джон Уолтер
+        assertThat(actualBooks.get(0).getAuthors())
+                .hasSize(2)
+                .filteredOn(author ->
+                        author.getSurname().equals(author1.getSurname()) &&
+                                author.getMiddlename().equals(author1.getMiddlename()) &&
+                                author.getName().equals(author1.getName()))
+                .hasSize(1);
+        // Проверяем, что у первой книги (Alyaska) два автора, второй из которых Иван Иванов
+        assertThat(actualBooks.get(0).getAuthors())
+                .hasSize(2)
+                .filteredOn(author ->
+                        author.getSurname().equals(author2.getSurname()) &&
+                                author.getMiddlename().equals(author2.getMiddlename()) &&
+                                author.getName().equals(author2.getName()))
+                .hasSize(1);
+        // Проверяем, что у второй книги (Alyaska) один автор, Джон Уолтер
+        assertThat(actualBooks.get(1).getAuthors())
+                .hasSize(1)
+                .filteredOn(author ->
+                        author.getSurname().equals(author1.getSurname()) &&
+                                author.getMiddlename().equals(author1.getMiddlename()) &&
+                                author.getName().equals(author1.getName()))
+                .hasSize(1);
     }
 }

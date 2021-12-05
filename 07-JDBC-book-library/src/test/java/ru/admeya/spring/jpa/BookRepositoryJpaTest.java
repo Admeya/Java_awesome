@@ -13,7 +13,6 @@ import ru.admeya.spring.domain.Genre;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,9 +34,9 @@ class BookRepositoryJpaTest {
     @DisplayName("Insert book to DB")
     @Test
     void insert() {
-        Set<Author> authors = Set.of(new Author(1, "John", "Valter", "Scott"));
-        Set<Genre> genres = Set.of(new Genre(1, "sport"));
-        Set<Comment> comments = Set.of(new Comment("Very good book"));
+        List<Author> authors = List.of(new Author(1, "John", "Valter", "Scott"));
+        List<Genre> genres = List.of(new Genre(1, "sport"));
+        List<Comment> comments = List.of(new Comment("Very good book"));
 
         Book book = new Book(2, authors, genres, "How to loose friends", comments);
         bookRepositoryJpa.save(book);
@@ -60,11 +59,11 @@ class BookRepositoryJpaTest {
     @DisplayName("Should return all books")
     @Test
     void getAllBooks() {
-        Set<Author> authors = Set.of(
+        List<Author> authors = List.of(
                 new Author(1, "John", "Valter", "Scott"),
                 new Author(2, "Ivan", "Ivanovich", "Ivanov"));
-        Set<Genre> genres = Set.of(new Genre(1, "sport"));
-        Set<Comment> comments = Set.of(
+        List<Genre> genres = List.of(new Genre(1, "sport"));
+        List<Comment> comments = List.of(
                 new Comment(1, "Very good book"),
                 new Comment(2, "Not so bad"));
         Book expectedBook = new Book(EXISTING_BOOK_ID, authors, genres, EXISTING_BOOK_NAME, comments);
@@ -77,10 +76,10 @@ class BookRepositoryJpaTest {
     @DisplayName("Should get books by id")
     @Test
     void getBookById() {
-        Set<Author> authors = Set.of(new Author(1, "John", "Valter", "Scott"),
+        List<Author> authors = List.of(new Author(1, "John", "Valter", "Scott"),
                 new Author(2, "Ivan", "Ivanovich", "Ivanov"));
-        Set<Genre> genres = Set.of(new Genre(1, "sport"));
-        Set<Comment> comments = Set.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
+        List<Genre> genres = List.of(new Genre(1, "sport"));
+        List<Comment> comments = List.of(new Comment(1, "Very good book"), new Comment(2, "Not so bad"));
         Book expectedBook = new Book(EXISTING_BOOK_ID, authors, genres, EXISTING_BOOK_NAME, comments);
         Book actualBook = bookRepositoryJpa.findById(expectedBook.getBookId()).get();
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(expectedBook);
@@ -91,7 +90,7 @@ class BookRepositoryJpaTest {
     void getCommentByBookId() {
         Set<String> expectedComments = Set.of("Very good book", "Not so bad");
         Book book = bookRepositoryJpa.findById(EXISTING_BOOK_ID).get();
-        Set<Comment> actualComments = book.getComments();
+        List<Comment> actualComments = book.getComments();
         assertThat(actualComments)
                 .hasSize(2)
                 .extracting(comment -> comment.getDescription())

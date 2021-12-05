@@ -4,38 +4,6 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
-    <changeSet author="irina" id="createTableAuthors">
-        <createTable tableName="authors">
-            <column name="author_id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="AUTHORS_PK"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="middlename" type="varchar(50)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="surname" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint  baseColumnNames="book_id"
-                                  baseTableName="author"
-                                  baseTableSchemaName="public"
-                                  constraintName="fk_genre_books"
-                                  onDelete="CASCADE"
-                                  onUpdate="RESTRICT"
-                                  referencedColumnNames="book_id"
-                                  referencedTableName="books"
-                                  referencedTableSchemaName="public"/>
-    </changeSet>
-    <changeSet author="irina" id="addAutoIncrementAuthor">
-        <addAutoIncrement columnName="author_id" columnDataType="BIGINT" incrementBy="1" tableName="authors" startWith="2"/>
-    </changeSet>
 
     <changeSet author="irina" id="createTableGenres">
         <createTable tableName="genres">
@@ -78,6 +46,26 @@
     </changeSet>
     <changeSet author="irina" id="addAutoIncrementGenre">
         <addAutoIncrement columnName="book_id" columnDataType="BIGINT" incrementBy="1" tableName="books" startWith="2"/>
+    </changeSet>
+
+    <changeSet author="irina" id="createTableAuthors">
+        <createTable tableName="authors">
+            <column name="author_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="AUTHORS_PK"/>
+            </column>
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middlename" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="surname" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="irina" id="addAutoIncrementAuthor">
+        <addAutoIncrement columnName="author_id" columnDataType="BIGINT" incrementBy="1" tableName="authors" startWith="2"/>
     </changeSet>
 
 

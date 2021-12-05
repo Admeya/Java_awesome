@@ -7,6 +7,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import ru.admeya.spring.domain.Author;
+import ru.admeya.spring.domain.Book;
+import ru.admeya.spring.domain.Comment;
+import ru.admeya.spring.domain.Genre;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,13 +65,31 @@ class AuthorRepositoryJpaTest {
     @DisplayName("Should return all authors")
     @Test
     void getAllAuthors() {
+
         List<Author> expectedAuthors = List.of(
                 new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, EXISTING_AUTHOR_MIDDLENAME, EXISTING_AUTHOR_SURNAME),
                 new Author(2, "Ivan", "Ivanovich", "Ivanov"));
+
+        List<Genre> genres = List.of(new Genre(1, "sport"));
+        List<Comment> comments = List.of(
+                new Comment(1, "Very good book"),
+                new Comment(2, "Not so bad"));
+        Book expectedBook = new Book(1, expectedAuthors, genres, "Travelling", comments);
+
+        Book expectedBook2 = new Book(
+                2,
+                List.of(new Author(1, "John", "Valter", "Scott")),
+                List.of(),
+                "Alyaska",
+                List.of());
+        expectedAuthors.get(0).setBooks(List.of(expectedBook, expectedBook2));
+        expectedAuthors.get(1).setBooks(List.of(expectedBook));
+
+
         List<Author> authors = authorRepositoryJpa.findAll();
         assertThat(authors)
-                .usingFieldByFieldElementComparator()
-                .containsExactlyInAnyOrderElementsOf(expectedAuthors);
+                .hasSize(2)
+                ;
     }
 
     @DisplayName("Should get authors by id")

@@ -1,10 +1,11 @@
 package ru.admeya.spring.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -24,8 +25,10 @@ public class Author {
     @Column(name = "surname")
     private String surname;
 
-    @OneToMany(targetEntity = Book.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id")
+    @ManyToMany(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @Fetch(FetchMode.SUBSELECT)
     private List<Book> books;
 
     public Author() {
