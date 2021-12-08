@@ -1,4 +1,4 @@
-package ru.admeya.spring.jpa;
+package ru.admeya.spring.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import ru.admeya.spring.domain.Comment;

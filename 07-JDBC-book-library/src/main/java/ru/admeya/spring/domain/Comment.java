@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -17,6 +14,7 @@ import java.util.Objects;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private long commentId;
 
@@ -37,5 +35,14 @@ public class Comment {
         this.bookId = bookId;
         this.commentId = commentId;
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentId=" + commentId +
+                ", bookId=" + bookId +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

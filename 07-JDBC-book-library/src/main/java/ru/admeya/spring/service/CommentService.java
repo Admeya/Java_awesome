@@ -1,49 +1,18 @@
 package ru.admeya.spring.service;
 
-import org.springframework.stereotype.Service;
-import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
-import ru.admeya.spring.jpa.CommentRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
-@Service
-public class CommentService {
+public interface CommentService {
 
-    private final CommentRepository commentRepositoryJpa;
-    private final BookService bookService;
+    Comment saveComment(String comment);
 
-    public CommentService(CommentRepository commentRepository, BookService bookService) {
-        this.commentRepositoryJpa = commentRepository;
-        this.bookService = bookService;
+    List<Comment> getAllComments();
 
-    }
+    Comment getCommentById(long id);
 
-    @Transactional
-    public Comment saveComment(String comment) {
-        return commentRepositoryJpa.save(new Comment(comment));
-    }
+    void delCommentById(long id);
 
-    @Transactional
-    public List<Comment> getAllComments() {
-        return commentRepositoryJpa.findAll();
-    }
-
-    @Transactional
-    public Comment getCommentById(long id) {
-        return commentRepositoryJpa.findById(id).get();
-    }
-
-    @Transactional
-    public void delCommentById(long id) {
-        commentRepositoryJpa.deleteById(id);
-    }
-
-    @Transactional
-    public List<Comment> getCommentByBookId(long bookId) {
-        Book book = bookService.getBookById(bookId);
-        return book.getComments();
-    }
+    List<Comment> getCommentByBookId(long bookId);
 }
