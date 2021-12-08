@@ -1,17 +1,35 @@
 package ru.admeya.spring.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Data
+@Entity
+@Table(name = "authors")
 public class Author {
 
+    @Id
+    @Column(name = "author_id")
     private long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "middlename")
     private String middlename;
 
+    @Column(name = "surname")
     private String surname;
+
+    @ManyToMany(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Book> books;
 
     public Author() {
     }

@@ -1,32 +1,60 @@
 package ru.admeya.spring.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.*;
 
-@Data
+import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.List;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "books")
 public class Book {
 
+    @Id
+    @Column(name = "book_id")
     private long bookId;
 
-    private long authorId;
-
-    private long genreId;
-
+    @Column(name = "name")
     private String name;
 
-    private String authorName;
+    @ManyToMany(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Author> authors;
 
-    private String genreName;
+    @OneToMany(targetEntity = Genre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "genre_id")
+    @Fetch(FetchMode.SUBSELECT)
+    private List<Genre> genres;
 
-    public Book(long bookId, long authorId, long genreId, String name) {
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    @BatchSize(size = 5)
+    private List<Comment> comments;
+
+    public Book(long bookId, List<Author> authors, List<Genre> genres, String name, List<Comment> comments) {
         this.bookId = bookId;
-        this.authorId = authorId;
-        this.genreId = genreId;
         this.name = name;
+        this.authors = authors;
+        this.genres = genres;
+        this.comments = comments;
     }
 
-    public Book(long authorId, long genreId, String name) {
-        this.authorId = authorId;
-        this.genreId = genreId;
+    public Book(List<Author> authors, List<Genre> genres, String name, List<Comment> comments) {
         this.name = name;
+        this.authors = authors;
+        this.genres = genres;
+        this.comments = comments;
+    }
+
+    public Book() {
+
     }
 }
