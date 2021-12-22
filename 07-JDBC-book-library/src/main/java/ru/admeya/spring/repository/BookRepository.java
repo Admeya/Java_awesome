@@ -5,7 +5,7 @@ import ru.admeya.spring.domain.Book;
 
 import java.util.List;
 
-public interface BookRepository extends CrudRepository<Book, Long> {
+public interface BookRepository extends CrudRepository<Book, String> {
 
     @Override
     List<Book> findAll();

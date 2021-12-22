@@ -10,9 +10,9 @@ public interface CommentService {
 
     List<Comment> getAllComments();
 
-    Comment getCommentById(long id);
+    Comment getCommentById(String id);
 
-    void delCommentById(long id);
+    void delCommentById(String id);
 
-    List<Comment> getCommentByBookId(long bookId);
+    List<Comment> getCommentByBookId(String bookId);
 }

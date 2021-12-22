@@ -16,8 +16,8 @@ public interface BookService {
 
     List<Book> getAllBooks();
 
-    void delBookById(long id);
+    void delBookById(String id);
 
-    Book getBookById(long id);
+    Book getBookById(String id);
 
 }

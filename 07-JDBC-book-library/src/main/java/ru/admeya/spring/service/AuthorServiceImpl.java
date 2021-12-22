@@ -31,12 +31,12 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Transactional(readOnly = true)
-    public Author getAuthorById(long id) {
+    public Author getAuthorById(String id) {
         return authorRepository.findById(id).get();
     }
 
     @Transactional
-    public void delAuthorById(long id) {
+    public void delAuthorById(String id) {
         authorRepository.deleteById(id);
     }
 

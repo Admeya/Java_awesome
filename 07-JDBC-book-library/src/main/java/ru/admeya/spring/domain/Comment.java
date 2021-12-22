@@ -1,27 +1,20 @@
 package ru.admeya.spring.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "comments")
+@Document(collection = "comments")
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
-    private long commentId;
+    private String commentId;
 
-    @Column(name = "book_id")
     private long bookId;
 
-    @Column(name = "description")
     private String description;
 
     public Comment() {
@@ -31,7 +24,7 @@ public class Comment {
         this.description = description;
     }
 
-    public Comment(long commentId, long bookId, String description) {
+    public Comment(String commentId, long bookId, String description) {
         this.bookId = bookId;
         this.commentId = commentId;
         this.description = description;

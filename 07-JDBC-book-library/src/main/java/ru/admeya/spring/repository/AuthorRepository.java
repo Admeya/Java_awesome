@@ -5,7 +5,7 @@ import ru.admeya.spring.domain.Author;
 
 import java.util.List;
 
-public interface AuthorRepository extends CrudRepository<Author, Long> {
+public interface AuthorRepository extends CrudRepository<Author, String> {
 
     @Override
     List<Author> findAll();

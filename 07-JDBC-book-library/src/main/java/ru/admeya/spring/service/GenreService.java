@@ -10,9 +10,9 @@ public interface GenreService {
 
     List<Genre> getAllGenres();
 
-    Genre getGenreById(long id);
+    Genre getGenreById(String id);
 
-    void delGenreById(long id);
+    void delGenreById(String id);
 
     Genre getGenreByName(String genreName);
 }

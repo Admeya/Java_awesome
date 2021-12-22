@@ -27,12 +27,12 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Transactional(readOnly = true)
-    public Genre getGenreById(long id) {
+    public Genre getGenreById(String id) {
         return genreRepository.findById(id).get();
     }
 
     @Transactional
-    public void delGenreById(long id) {
+    public void delGenreById(String id) {
         genreRepository.deleteById(id);
     }
 

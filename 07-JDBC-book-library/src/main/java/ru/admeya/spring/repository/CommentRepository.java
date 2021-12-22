@@ -5,7 +5,7 @@ import ru.admeya.spring.domain.Comment;
 
 import java.util.List;
 
-public interface CommentRepository extends CrudRepository<Comment, Long> {
+public interface CommentRepository extends CrudRepository<Comment, String> {
 
     @Override
     List<Comment> findAll();

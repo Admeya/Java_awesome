@@ -12,9 +12,9 @@ public interface AuthorService {
 
     List<Author> getAllAuthors();
 
-    Author getAuthorById(long id);
+    Author getAuthorById(String id);
 
-    void delAuthorById(long id);
+    void delAuthorById(String id);
 
     Author getAuthorByFIO(String name, String middlename, String surname);
 }

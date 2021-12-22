@@ -31,17 +31,17 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Transactional(readOnly = true)
-    public Comment getCommentById(long id) {
+    public Comment getCommentById(String id) {
         return commentRepositoryJpa.findById(id).get();
     }
 
     @Transactional
-    public void delCommentById(long id) {
+    public void delCommentById(String id) {
         commentRepositoryJpa.deleteById(id);
     }
 
     @Transactional(readOnly = true)
-    public List<Comment> getCommentByBookId(long bookId) {
+    public List<Comment> getCommentByBookId(String bookId) {
         Book book = bookService.getBookById(bookId);
         return book.getComments();
     }

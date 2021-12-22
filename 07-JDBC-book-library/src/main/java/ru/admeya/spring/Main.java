@@ -1,21 +1,26 @@
 package ru.admeya.spring;
 
-import org.h2.tools.Console;
+import com.github.cloudyrock.spring.v5.EnableMongock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.repository.AuthorRepository;
 import ru.admeya.spring.repository.BookRepository;
 import ru.admeya.spring.repository.GenreRepository;
 import ru.admeya.spring.service.*;
 
+import java.util.List;
+
+@EnableMongock
+@EnableMongoRepositories
 @SpringBootApplication
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         ApplicationContext context = SpringApplication.run(Main.class);
-        Console.main(args);
 
         AuthorRepository authorRepository = context.getBean(AuthorRepository.class);
         BookRepository bookRepository = context.getBean(BookRepository.class);
@@ -26,9 +31,10 @@ public class Main {
         BookService bookService = new BookServiceImpl(authorService, bookRepository, genreService);
 
 
-        System.out.println(bookService.getAllBooks());
+        List<Book> books = bookService.getAllBooks();
+        System.out.println(books);
 
-        System.out.println(bookService.getBookById(2));
+        System.out.println(bookService.getBookById(books.get(0).getBookId()));
 
         System.out.println(authorService.getAllAuthors());
         System.out.println(genreService.getAllGenres());

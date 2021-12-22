@@ -45,13 +45,13 @@ public class BookServiceImpl implements BookService{
     }
 
     @Transactional
-    public void delBookById(long id) {
+    public void delBookById(String id) {
         bookRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
-    public Book getBookById(long id) {
-        return bookRepository.findById(id).get();
+    public Book getBookById(String id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
 }
