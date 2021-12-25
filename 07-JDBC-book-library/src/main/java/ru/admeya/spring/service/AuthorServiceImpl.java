@@ -25,12 +25,10 @@ public class AuthorServiceImpl implements AuthorService{
         return authorRepository.save(new Author(name, middleName, surname));
     }
 
-    @Transactional(readOnly = true)
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Author getAuthorById(long id) {
         return authorRepository.findById(id).get();
     }
@@ -40,7 +38,6 @@ public class AuthorServiceImpl implements AuthorService{
         authorRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     public Author getAuthorByFIO(
             String name,
             String middlename,

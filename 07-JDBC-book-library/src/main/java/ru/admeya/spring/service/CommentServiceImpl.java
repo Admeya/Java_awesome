@@ -25,12 +25,10 @@ public class CommentServiceImpl implements CommentService {
         return commentRepositoryJpa.save(new Comment(comment));
     }
 
-    @Transactional(readOnly = true)
     public List<Comment> getAllComments() {
         return commentRepositoryJpa.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Comment getCommentById(long id) {
         return commentRepositoryJpa.findById(id).get();
     }
@@ -40,9 +38,9 @@ public class CommentServiceImpl implements CommentService {
         commentRepositoryJpa.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Comment> getCommentByBookId(long bookId) {
-        Book book = bookService.getBookById(bookId);
-        return book.getComments();
+    public List<Comment> getCommentByBook(Book book) {
+        List<Comment>  comments = commentRepositoryJpa.findAllCommentsByBook(book);
+
+        return comments;
     }
 }

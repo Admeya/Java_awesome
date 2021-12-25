@@ -1,5 +1,6 @@
 package ru.admeya.spring.service;
 
+import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface CommentService {
 
     void delCommentById(long id);
 
-    List<Comment> getCommentByBookId(long bookId);
+    List<Comment> getCommentByBook(Book book);
 }

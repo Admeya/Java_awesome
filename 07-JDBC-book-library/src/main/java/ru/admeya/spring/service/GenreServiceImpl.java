@@ -21,12 +21,10 @@ public class GenreServiceImpl implements GenreService {
         return genreRepository.save(new Genre(genre));
     }
 
-    @Transactional(readOnly = true)
     public List<Genre> getAllGenres() {
         return genreRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Genre getGenreById(long id) {
         return genreRepository.findById(id).get();
     }
@@ -36,7 +34,6 @@ public class GenreServiceImpl implements GenreService {
         genreRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     public Genre getGenreByName(String genreName) {
         Genre genre;
 

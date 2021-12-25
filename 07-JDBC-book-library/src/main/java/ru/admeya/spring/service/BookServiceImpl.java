@@ -39,7 +39,6 @@ public class BookServiceImpl implements BookService{
         return bookRepository.save(new Book(List.of(author), genre, bookName, comments));
     }
 
-    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
@@ -49,7 +48,6 @@ public class BookServiceImpl implements BookService{
         bookRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     public Book getBookById(long id) {
         return bookRepository.findById(id).get();
     }
