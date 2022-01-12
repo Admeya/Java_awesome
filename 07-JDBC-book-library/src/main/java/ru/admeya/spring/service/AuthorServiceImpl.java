@@ -1,14 +1,13 @@
 package ru.admeya.spring.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.repository.AuthorRepository;
 
 import java.util.List;
 
 @Service
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
 
@@ -20,7 +19,6 @@ public class AuthorServiceImpl implements AuthorService{
         return authorRepository.count();
     }
 
-    @Transactional
     public Author insertAuthor(String name, String middleName, String surname) {
         return authorRepository.save(new Author(name, middleName, surname));
     }
@@ -33,7 +31,6 @@ public class AuthorServiceImpl implements AuthorService{
         return authorRepository.findById(id).get();
     }
 
-    @Transactional
     public void delAuthorById(long id) {
         authorRepository.deleteById(id);
     }
