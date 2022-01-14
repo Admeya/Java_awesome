@@ -1,7 +1,6 @@
 package ru.admeya.spring.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.repository.CommentRepository;
@@ -20,29 +19,25 @@ public class CommentServiceImpl implements CommentService {
 
     }
 
-    @Transactional
     public Comment saveComment(String comment) {
         return commentRepositoryJpa.save(new Comment(comment));
     }
 
-    @Transactional(readOnly = true)
     public List<Comment> getAllComments() {
         return commentRepositoryJpa.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Comment getCommentById(String id) {
         return commentRepositoryJpa.findById(id).get();
     }
 
-    @Transactional
     public void delCommentById(String id) {
         commentRepositoryJpa.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Comment> getCommentByBookId(String bookId) {
-        Book book = bookService.getBookById(bookId);
-        return book.getComments();
+    public List<Comment> getCommentByBook(Book book) {
+        List<Comment> comments = commentRepositoryJpa.findAllCommentsByBook(book);
+
+        return comments;
     }
 }

@@ -1,7 +1,6 @@
 package ru.admeya.spring.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Comment;
@@ -11,7 +10,7 @@ import ru.admeya.spring.repository.BookRepository;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     private final AuthorService authorService;
     private final BookRepository bookRepository;
@@ -23,7 +22,6 @@ public class BookServiceImpl implements BookService{
         this.genreService = genreService;
     }
 
-    @Transactional
     public Book insertBook(
             String name,
             String middleName,
@@ -39,19 +37,16 @@ public class BookServiceImpl implements BookService{
         return bookRepository.save(new Book(List.of(author), genre, bookName, comments));
     }
 
-    @Transactional(readOnly = true)
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
-    @Transactional
     public void delBookById(String id) {
         bookRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     public Book getBookById(String id) {
-        return bookRepository.findById(id).orElse(null);
+        return bookRepository.findById(id).get();
     }
 
 }
