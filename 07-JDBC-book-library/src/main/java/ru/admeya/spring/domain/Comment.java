@@ -1,24 +1,28 @@
 package ru.admeya.spring.domain;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Objects;
+import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "comments")
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private long commentId;
 
-    @Column(name = "book_id")
-    private long bookId;
+    @EqualsAndHashCode.Exclude //to avoid LazyInitializationException
+    @ToString.Exclude //to avoid LazyInitializationException
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     @Column(name = "description")
     private String description;
@@ -30,16 +34,4 @@ public class Comment {
         this.description = description;
     }
 
-    public Comment(long commentId, String description) {
-        this.commentId = commentId;
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return String.join(" ",
-                String.valueOf(commentId),
-                description,
-                "\n");
-    }
 }
