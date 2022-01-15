@@ -14,6 +14,8 @@ public interface BookService {
             String genreName,
             String comment);
 
+    Book insertBook (Book book);
+
     List<Book> getAllBooks();
 
     void delBookById(String id);

@@ -10,34 +10,37 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    private final CommentRepository commentRepositoryJpa;
+    private final CommentRepository commentRepository;
     private final BookService bookService;
 
     public CommentServiceImpl(CommentRepository commentRepository, BookService bookService) {
-        this.commentRepositoryJpa = commentRepository;
+        this.commentRepository = commentRepository;
         this.bookService = bookService;
 
     }
 
     public Comment saveComment(String comment) {
-        return commentRepositoryJpa.save(new Comment(comment));
+        return commentRepository.save(new Comment(comment));
     }
 
     public List<Comment> getAllComments() {
-        return commentRepositoryJpa.findAll();
+        return commentRepository.findAll();
     }
 
     public Comment getCommentById(String id) {
-        return commentRepositoryJpa.findById(id).get();
+        return commentRepository.findById(id).get();
     }
 
     public void delCommentById(String id) {
-        commentRepositoryJpa.deleteById(id);
+        commentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Comment> getCommentByBookId(String bookId) {
+        return commentRepository.findAllCommentsByBookId(bookId);
     }
 
     public List<Comment> getCommentByBook(Book book) {
-        List<Comment> comments = commentRepositoryJpa.findAllCommentsByBook(book);
-
-        return comments;
+        return commentRepository.findAllCommentsByBookId(book.getBookId());
     }
 }
