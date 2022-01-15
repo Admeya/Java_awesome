@@ -7,9 +7,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
+import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.domain.Genre;
 import ru.admeya.spring.repository.AuthorRepository;
 import ru.admeya.spring.repository.BookRepository;
+import ru.admeya.spring.repository.CommentRepository;
 import ru.admeya.spring.repository.GenreRepository;
 import ru.admeya.spring.service.*;
 
@@ -27,10 +29,12 @@ public class Main {
         AuthorRepository authorRepository = context.getBean(AuthorRepository.class);
         BookRepository bookRepository = context.getBean(BookRepository.class);
         GenreRepository genreRepository = context.getBean(GenreRepository.class);
+        CommentRepository commentRepository = context.getBean(CommentRepository.class);
 
         GenreService genreService = new GenreServiceImpl(genreRepository);
         AuthorService authorService = new AuthorServiceImpl(authorRepository);
         BookService bookService = new BookServiceImpl(authorService, bookRepository, genreService);
+        CommentService commentService = new CommentServiceImpl(commentRepository, bookService);
 
 
         List<Book> books = bookService.getAllBooks();
@@ -69,14 +73,9 @@ public class Main {
         System.out.println(genreService.getAllGenres());
         System.out.println(bookService.getAllBooks());
 
-        Author willDeletedAuthor = savedAuthors.get(0);
-        Author survivorAuthor = savedAuthors.get(1);
-        System.out.println("Will delete: " + willDeletedAuthor);
-        authorService.delAuthorById(willDeletedAuthor.getId());
-
-        System.out.println("Must be just 1 author:" + survivorAuthor.getName() + " " + survivorAuthor.getSurname());
-        System.out.println(bookService.getBookById(savedBookTwoAuthors.getBookId()));
-
+        List<Comment> commentsBook1 = commentService.getCommentByBookId(books.get(0).getBookId());
+        System.out.println(commentsBook1.get(0).getDescription());
+        System.out.println(commentsBook1.get(1).getDescription());
 
     }
 }
