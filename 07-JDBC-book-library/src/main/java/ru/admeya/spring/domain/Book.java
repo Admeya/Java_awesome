@@ -1,45 +1,38 @@
 package ru.admeya.spring.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-
-import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.ArrayList;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
-@Entity
-@Table(name = "books")
+@Document(collection = "books")
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
-    private long bookId;
+    private String bookId;
 
-    @Column(name = "name")
     private String name;
 
-    @ManyToMany(targetEntity = Author.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @DBRef
     private List<Author> authors;
 
-    @ManyToOne(targetEntity = Genre.class, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "genre_id")
+    @DBRef
     private Genre genre;
 
-    @EqualsAndHashCode.Exclude //to avoid LazyInitializationException
-    @ToString.Exclude //to avoid LazyInitializationException
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();;
+    @DBRef
+    private List<Comment> comments;
+
+    public Book(String bookId, List<Author> authors, Genre genre, String name, List<Comment> comments) {
+        this.bookId = bookId;
+        this.name = name;
+        this.authors = authors;
+        this.genre = genre;
+        this.comments = comments;
+    }
 
     public Book(List<Author> authors, Genre genre, String name, List<Comment> comments) {
         this.name = name;
@@ -50,5 +43,16 @@ public class Book {
 
     public Book() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", name='" + name + '\'' +
+                ", authors=" + authors +
+                ", genre=" + genre +
+                ", comments=" + comments +
+                '}';
     }
 }

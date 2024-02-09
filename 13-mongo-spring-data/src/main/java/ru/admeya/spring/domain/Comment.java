@@ -13,7 +13,7 @@ public class Comment {
     @Id
     private String commentId;
 
-    private long bookId;
+    private String bookId;
 
     private String description;
 
@@ -24,7 +24,7 @@ public class Comment {
         this.description = description;
     }
 
-    public Comment(String commentId, long bookId, String description) {
+    public Comment(String commentId, String bookId, String description) {
         this.bookId = bookId;
         this.commentId = commentId;
         this.description = description;

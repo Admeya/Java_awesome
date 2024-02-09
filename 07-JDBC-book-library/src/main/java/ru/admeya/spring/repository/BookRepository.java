@@ -1,8 +1,12 @@
 package ru.admeya.spring.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import ru.admeya.spring.domain.Book;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+import java.util.List;
 
+public interface BookRepository extends CrudRepository<Book, String> {
+
+    @Override
+    List<Book> findAll();
 }

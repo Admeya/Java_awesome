@@ -41,11 +41,11 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll();
     }
 
-    public void delBookById(long id) {
+    public void delBookById(String id) {
         bookRepository.deleteById(id);
     }
 
-    public Book getBookById(long id) {
+    public Book getBookById(String id) {
         return bookRepository.findById(id).get();
     }
 

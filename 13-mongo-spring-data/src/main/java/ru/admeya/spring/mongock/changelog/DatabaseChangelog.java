@@ -5,7 +5,9 @@ import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import ru.admeya.spring.domain.Book;
 import ru.admeya.spring.domain.Genre;
+import ru.admeya.spring.repository.BookRepository;
 import ru.admeya.spring.repository.GenreRepository;
 
 import java.util.List;
@@ -25,30 +27,39 @@ public class DatabaseChangelog {
         myCollection.insertOne(doc1);
     }
 
-    @ChangeSet(order = "003", id = "insertBooks", author = "bykovaie")
-    public void insertBooks(MongoDatabase db, GenreRepository genreRepository) {
+    @ChangeSet(order = "003", id = "insertAuthorsAndBooks", author = "bykovaie")
+    public void insertAuthors(MongoDatabase db, GenreRepository genreRepository) {
+        MongoCollection<Document> myCollection = db.getCollection("authors");
+        var author1 = new Document().append("name", "John").append("middlename", "Valter").append("surname", "Scott");
+        var author2 = new Document().append("name", "Ivan").append("middlename", "Ivanovich").append("surname", "Ivanov");
+
+        var authors = List.of(author1, author2);
+        myCollection.insertMany(authors);
+
         Genre genre = genreRepository.findByName("sport").orElse(new Genre());
 
-        MongoCollection<Document> myCollection = db.getCollection("books");
-        var doc1 = new Document().append("name", "Travelling").append("genre", new Document(genre));
-        var doc2 = new Document().append("name", "Alyaska");
-        myCollection.insertMany(List.of(doc1, doc2));
+        MongoCollection<Document> bookCollection = db.getCollection("books");
+
+        var book1 = new Document()
+                .append("name", "Travelling")
+                .append("genreId", genre.getGenreId())
+                .append("authors", authors);
+        var book2 = new Document()
+                .append("name", "Alyaska")
+                .append("genreId", genre.getGenreId())
+                .append("authors", List.of(author1));
+        bookCollection.insertMany(List.of(book1, book2));
     }
 
-    @ChangeSet(order = "004", id = "insertAuthors", author = "bykovaie")
-    public void insertAuthors(MongoDatabase db) {
-        MongoCollection<Document> myCollection = db.getCollection("authors");
-        var doc1 = new Document().append("name", "John").append("middlename", "Valter").append("surname", "Scott");
-        var doc2 = new Document().append("name", "Ivan").append("middlename", "Ivanovich").append("surname", "Ivanov");
-
-        myCollection.insertMany(List.of(doc1, doc2));
-    }
 
     @ChangeSet(order = "005", id = "insertComments", author = "bykovaie")
-    public void insertComments(MongoDatabase db) {
+    public void insertComments(MongoDatabase db, BookRepository bookRepository) {
+        List<Book> books = bookRepository.findAll();
+        Book book1 = books.get(0);
+
         MongoCollection<Document> myCollection = db.getCollection("comments");
-        var doc1 = new Document().append("name", "Very good book");
-        var doc2 = new Document().append("name", "Not so bad");
+        var doc1 = new Document().append("description", "Very good book").append("bookId", book1.getBookId());
+        var doc2 = new Document().append("description", "Not so bad").append("bookId", book1.getBookId());
 
         myCollection.insertMany(List.of(doc1, doc2));
     }

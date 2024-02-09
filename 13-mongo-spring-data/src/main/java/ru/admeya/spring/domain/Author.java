@@ -20,9 +20,6 @@ public class Author {
 
     private String surname;
 
-    @DBRef
-    private List<Book> books;
-
     public Author() {
     }
 
@@ -39,8 +36,4 @@ public class Author {
         this.middlename = middleName;
     }
 
-    @Override
-    public String toString() {
-        return String.join(" ", String.valueOf(id), name, middlename, surname, "\n");
-    }
 }

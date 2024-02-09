@@ -23,11 +23,11 @@ public class GenreServiceImpl implements GenreService {
         return genreRepository.findAll();
     }
 
-    public Genre getGenreById(long id) {
+    public Genre getGenreById(String id) {
         return genreRepository.findById(id).get();
     }
 
-    public void delGenreById(long id) {
+    public void delGenreById(String id) {
         genreRepository.deleteById(id);
     }
 

@@ -2,23 +2,17 @@ package ru.admeya.spring.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@ToString
-@Entity
-@Table(name = "genres")
+@Document(collection = "genres")
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "genre_id")
-    private long genreId;
+    private String genreId;
 
-    @Column(name = "name")
     private String name;
 
     public Genre() {
@@ -28,4 +22,16 @@ public class Genre {
         this.name = name;
     }
 
+    public Genre(String genreId, String name) {
+        this.genreId = genreId;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "genreId=" + genreId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

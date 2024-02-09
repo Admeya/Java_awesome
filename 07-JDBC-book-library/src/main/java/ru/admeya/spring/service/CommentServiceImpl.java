@@ -27,11 +27,11 @@ public class CommentServiceImpl implements CommentService {
         return commentRepositoryJpa.findAll();
     }
 
-    public Comment getCommentById(long id) {
+    public Comment getCommentById(String id) {
         return commentRepositoryJpa.findById(id).get();
     }
 
-    public void delCommentById(long id) {
+    public void delCommentById(String id) {
         commentRepositoryJpa.deleteById(id);
     }
 

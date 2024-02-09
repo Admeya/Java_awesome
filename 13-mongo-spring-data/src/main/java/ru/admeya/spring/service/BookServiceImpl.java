@@ -3,7 +3,6 @@ package ru.admeya.spring.service;
 import org.springframework.stereotype.Service;
 import ru.admeya.spring.domain.Author;
 import ru.admeya.spring.domain.Book;
-import ru.admeya.spring.domain.Comment;
 import ru.admeya.spring.domain.Genre;
 import ru.admeya.spring.repository.BookRepository;
 
@@ -32,10 +31,14 @@ public class BookServiceImpl implements BookService {
 
         Author author = authorService.getAuthorByFIO(name, middleName, surname);
         Genre genre = genreService.getGenreByName(genreName);
-        List<Comment> comments = List.of(new Comment(comment));
-
-        return bookRepository.save(new Book(List.of(author), genre, bookName, comments));
+        Book book = new Book(genre.getGenreId(), bookName);
+        book.setAuthors(List.of(author));
+        return bookRepository.save(book);
     }
+
+    public Book insertBook (Book book) {
+        return bookRepository.save(book);
+    };
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();

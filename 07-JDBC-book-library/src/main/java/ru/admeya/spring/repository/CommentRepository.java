@@ -1,13 +1,12 @@
 package ru.admeya.spring.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import ru.admeya.spring.domain.Book;
+import org.springframework.data.repository.CrudRepository;
 import ru.admeya.spring.domain.Comment;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends CrudRepository<Comment, String> {
 
-    List<Comment> findAllCommentsByBook(Book book);
-
+    @Override
+    List<Comment> findAll();
 }

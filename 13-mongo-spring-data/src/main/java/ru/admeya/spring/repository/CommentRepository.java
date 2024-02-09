@@ -1,12 +1,11 @@
 package ru.admeya.spring.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import ru.admeya.spring.domain.Comment;
 
 import java.util.List;
 
-public interface CommentRepository extends CrudRepository<Comment, String> {
+public interface CommentRepository extends MongoRepository<Comment, String> {
 
-    @Override
-    List<Comment> findAll();
+    List<Comment> findAllCommentsByBookId(String bookId);
 }

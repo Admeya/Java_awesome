@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,28 +19,20 @@ public class Book {
 
     private String name;
 
-    @DBRef
-    private List<Author> authors;
+    private String genreId;
 
     @DBRef
-    private Genre genre;
+    private List<Author> authors = new ArrayList<>();
 
-    @DBRef
-    private List<Comment> comments;
-
-    public Book(String bookId, List<Author> authors, Genre genre, String name, List<Comment> comments) {
+    public Book(String bookId, String genreId, String name) {
         this.bookId = bookId;
         this.name = name;
-        this.authors = authors;
-        this.genre = genre;
-        this.comments = comments;
+        this.genreId = genreId;
     }
 
-    public Book(List<Author> authors, Genre genre, String name, List<Comment> comments) {
+    public Book(String genreId, String name) {
         this.name = name;
-        this.authors = authors;
-        this.genre = genre;
-        this.comments = comments;
+        this.genreId = genreId;
     }
 
     public Book() {
@@ -51,8 +45,7 @@ public class Book {
                 "bookId=" + bookId +
                 ", name='" + name + '\'' +
                 ", authors=" + authors +
-                ", genre=" + genre +
-                ", comments=" + comments +
+                ", genreId =" + genreId +
                 '}';
     }
 }

@@ -1,29 +1,36 @@
 package ru.admeya.spring.domain;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import java.util.List;
 
 @Data
-@Entity
-@Table(name = "authors")
+@Document(collection = "authors")
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id")
-    private long id;
+    private String id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "middlename")
     private String middlename;
 
-    @Column(name = "surname")
     private String surname;
 
+    @DBRef
+    private List<Book> books;
+
     public Author() {
+    }
+
+    public Author(String id, String name, String middleName, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.middlename = middleName;
     }
 
     public Author(String name, String middleName, String surname) {

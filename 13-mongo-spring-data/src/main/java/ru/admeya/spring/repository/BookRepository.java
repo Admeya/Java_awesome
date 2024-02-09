@@ -1,12 +1,9 @@
 package ru.admeya.spring.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import ru.admeya.spring.domain.Book;
 
-import java.util.List;
+public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
 
-public interface BookRepository extends CrudRepository<Book, String> {
-
-    @Override
-    List<Book> findAll();
+    void removeAuthorById(String authorId);
 }
